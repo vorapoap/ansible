@@ -1,0 +1,8 @@
+---
+- name: Set up Common
+  hosts: web-servers
+  user: root 
+#  vars:
+#    - nginx_site_name: Nginx Servers
+  roles:
+    - common

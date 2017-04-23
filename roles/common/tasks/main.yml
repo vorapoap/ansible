@@ -1,0 +1,31 @@
+#- name: Check that the EPEL exists
+#  stat:
+#    path: /etc/yum.repos.d/epel.repo
+#  register: epel_repo
+
+#- name: Install RPM Key for EPEL
+#  rpm_key:
+#    state: present
+#    key: http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 
+
+
+#- name: Add EPEL repository
+#  yum_repository:
+#    name: epel
+#    description: EPEL YUM repo
+#    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+#  when: epel_repo.stat.exists == False
+- include_role:
+    name: ansible-role-repo-epel
+
+- name: Install base programs
+  yum: name={{item}} state=present enablerepo=epel
+  with_items:
+  - htop
+  - ntp
+  - telnet
+  - wget 
+
+- name: Configure ntp
+  copy: src=ntp.conf dest=/etc/ntp.conf
+  notify: restart ntpd

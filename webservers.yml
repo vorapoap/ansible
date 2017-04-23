@@ -1,0 +1,10 @@
+---
+- name: Set up Webservers with NGINX / PHP-FPM / MEMCACHED
+  hosts: web-servers
+  user: root 
+#  vars:
+#    - nginx_site_name: Nginx Servers
+  roles:
+    - common
+    - ansible-role-repo-remi
+    - nginx
