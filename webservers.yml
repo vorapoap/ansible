@@ -4,4 +4,4 @@
    user: root 
    roles:
     - common
-    - nginx
+    - ansible-role-nginx
