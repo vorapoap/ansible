@@ -1,0 +1,12 @@
+[submodule "roles/ansible-role-ntp"]
+	path = roles/ansible-role-ntp
+	url = https://github.com/geerlingguy/ansible-role-ntp.git
+[submodule "roles/ansible-role-php71-fpm"]
+	path = roles/ansible-role-php71-fpm
+	url = https://github.com/vorapoap/ansible-role-php71-fpm.git
+[submodule "roles/ansible-role-repo-remi"]
+	path = roles/ansible-role-repo-remi
+	url = https://github.com/vorapoap/ansible-role-repo-remi.git
+[submodule "roles/ansible-role-repo-epel"]
+	path = roles/ansible-role-repo-epel
+	url = https://github.com/geerlingguy/ansible-role-repo-epel.git

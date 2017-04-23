@@ -1,6 +1,11 @@
 ---
 - name: Set up Common
-  hosts: webservers
+  hosts: all
   user: root 
   roles:
-    - common
+   - common
+   - ansible-role-ntp
+  vars:
+    ntp_areas: '.th'
+    ntp_timezone: Asia/Bangkok
+

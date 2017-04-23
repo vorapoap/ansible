@@ -5,3 +5,4 @@
    roles:
     - common
     - ansible-role-nginx
+    - ansible-role-php71-fpm
