@@ -1,0 +1,41 @@
+---
+ - name: Set up HAProxy
+   hosts: haproxyservers
+   user: root
+   vars:
+     haproxy_frontends:
+     - name: http
+       lines:
+       - mode http
+       - bind :80
+       - default_backend http_cluster
+     - name: stats 0.0.0.0:6427
+       lines:
+       - mode http
+       - maxconn 10
+       - no log
+       - acl network_allowed src 127.0.0.0/24
+       - acl network_allowed src 172.21.0.0/24
+       - acl network_allowed src 167.114.35.134
+       - tcp-request connection reject if !network_allowed
+       - stats enable
+       - stats uri /
+
+     haproxy_backends:
+     - name: http_cluster
+       lines:
+       - server yweb1 yweb1:80
+       - server yweb2 yweb2:80
+   roles:
+   - common
+   - ansible-role-haproxy
+#     - name: secure
+#      lines:
+#       - mode tcp
+#       - bind :443 ssl crt ./certs/cert.pem npn spdy/2
+#       - use_backend spdy_cluster if { ssl_npn -i spdy/2 }
+#       - default_backend http_cluster
+#   haproxy_backends:
+#    - name: spdy_cluster
+#      lines:
+#       - server srv01 127.0.0.1:10000

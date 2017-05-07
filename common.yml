@@ -1,11 +1,12 @@
 ---
 - name: Set up Common
   hosts: all
-  user: root 
+  user: root
+  vars:
+    ntp_area: .th
+    ntp_timezone: Asia/Bangkok
   roles:
    - common
    - ansible-role-ntp
-  vars:
-    ntp_areas: '.th'
-    ntp_timezone: Asia/Bangkok
+   - ansible-role-nfs-mount
 

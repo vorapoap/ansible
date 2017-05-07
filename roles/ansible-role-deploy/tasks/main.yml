@@ -1,0 +1,71 @@
+---
+- include_vars: file=common_vars.yml
+- name: Install Drupal Console
+  copy:
+    src: /usr/local/bin/drupal
+    dest: /usr/local/bin/
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Install Drush
+  template:
+    src: "../templates/drush.j2"
+    dest: "/usr/local/bin/drush"
+
+- name: Drush file mode..
+  file:
+    path: /usr/local/bin/drush
+    state: file
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Synchronize Drupal Folder
+  synchronize:
+    src: "{{ local_staging_path }}"
+    dest: "{{ deploy_path }}"
+    recursive: yes
+    delete: yes
+    rsync_opts:
+      - "--delete"
+      - "--no-motd"
+      - "--exclude 'web/sites/storage'"
+      - "--exclude 'web/sites/default/settings.local.php'"
+      - "--exclude 'web/sites/default/services.yml'"
+  notify: drupal cr all
+
+- name: Mass chown
+  file:
+    path: "{{ local_staging_path }}"
+    owner: apache
+    state: directory
+    recurse: yes
+
+- name: Ensure storage path on ./web/sites
+  file:
+    path: "{{ deploy_path }}/web/sites/storage"
+    state: directory
+    owner: apache
+    group: apache
+
+- name: Create symbolic link for storage
+  file:
+    src: "{{ item.path }}"
+    dest: "{{ item.dest }}"
+    state: link
+  with_items:
+    - { path: '/mnt/storage/drupal8/files', dest: '{{ deploy_path }}/web/sites/storage/files' }
+    - { path: '/mnt/storage/drupal8/private', dest: '{{ deploy_path }}/web/sites/storage/private' }
+
+- name: Apply production settings.local.php
+  template:
+    src: "../templates/settings.local.php.j2"
+    dest: "{{ deploy_path }}/web/sites/default/settings.local.php"
+  notify: drupal cr all
+
+- name: Apply production services.yml
+  template:
+    src: "../templates/services.yml.j2"
+    dest: "{{ deploy_path }}/web/sites/default/services.yml"
+  notify: drupal cr all

@@ -1,0 +1,35 @@
+---
+ - name: Set up Elasticsearch Servers
+   hosts: elasticsearchservers
+   user: root 
+   roles:
+    - common
+    - { role: ansible-elasticsearch, es_instance_name: "es" }
+   vars:
+     es_version: 5.3.2
+     es_config:
+       network.host: 0.0.0.0
+       http.port: 9200
+       transport.tcp.port: 9300-9400
+       http.cors.enabled: true
+       http.cors.allow-origin: http://172.21.70.50:9100
+       node.master: true
+       node.data: true
+       discovery.zen.ping.unicast.hosts: ["yes1", "yes2"]
+       discovery.zen.minimum_master_nodes: 2
+       path.repo: /mnt/storage/backup/elasticsearch
+
+     es_heap_size: "30g"
+     es_enable_xpack: true
+     es_xpack_features: 
+      - alerting
+      - monitoring
+      - graph
+     es_xpack_license: "{{ lookup('file', 'elasticsearch-license.json')  }}"
+     es_plugins:
+      - plugin: analysis-icu
+     pid_dir: '/var/run/elasticsearch/'
+     log_dir: '/var/log/elasticsearch/'
+     conf_dir: '/etc/elasticsearch/'
+     data_dirs: '/var/lib/elasticsearch/'
+

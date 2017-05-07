@@ -1,0 +1,7 @@
+---
+- name: Restart all web services...
+  hosts: webservers
+  user: root
+  roles:
+   - ansible-role-restart-webserver-service
+

@@ -1,0 +1,6 @@
+[direct-centos7-custom-el7]
+name=direct-centos7-custom-el7
+baseurl=https://lru-packages.s3-us-west-2.amazonaws.com/repo/el7/x86_64/
+gpgcheck=0
+enabled=0
+skip_if_unavailable=1

@@ -1,0 +1,8 @@
+---
+ - name: Set up Webservers latest MongoDB from ORG REPO
+   hosts: mongoservers
+   user: root 
+   roles:
+    - common
+    - ansible-role-mongodb_org
+    - ansible-role-mongodb-user

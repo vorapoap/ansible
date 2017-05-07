@@ -1,0 +1,11 @@
+---
+ - name: Set up Webservers latest MongoDB from ORG REPO
+   hosts: mysqlservers
+   user: root
+   vars:
+     mysql_conf_tpl: ../templates/my.cnf.j2
+     mysql_conf_file: ansible.cnf
+   roles:
+    - common
+    - ansible-role-mariadb
+    - ansible-role-mariadb-user

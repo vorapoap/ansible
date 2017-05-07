@@ -1,0 +1,15 @@
+---
+- include_vars: file=common_vars.yml
+- pip:
+    name: pymongo
+- name: Set remote MongoDB user
+  mongodb_user:
+    database="admin"
+    name="{{ item.user }}"
+    password="{{ item.password }}"
+    login_port=27017
+    state=present
+  ignore_errors: no
+  with_items:
+    - "{{ mongo_users }}"
+  when: mongo_users is defined

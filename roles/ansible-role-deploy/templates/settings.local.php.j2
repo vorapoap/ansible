@@ -1,0 +1,66 @@
+<?php
+error_reporting(E_ALL ^ E_NOTICE);
+
+$databases['default']['default'] = array (
+                            'database' => 'typ_live',
+                            'username' => '{{ mysql_users.0.user }}',
+                            'password' => '{{ mysql_users.0.password }}',
+                            'host' => '{{ mysql_server }}',
+                            'prefix' => '',
+                            'port' => '3306',
+                            'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+                            'driver' => 'mysql',
+);
+$databases['typ_data']['default'] = array (
+                            'database' => 'typ_data',
+                            'username' => '{{ mysql_users.0.user }}',
+                            'password' => '{{ mysql_users.0.password }}',
+                            'host' => '{{ mysql_server }}',
+                            'prefix' => 'typ_',
+                            'port' => '3306',
+                            'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+                            'driver' => 'mysql',
+                        );
+$databases['typ_ads']['default'] = array (
+                            'database' => 'typ_ads',
+                            'username' => '{{ mysql_users.0.user }}',
+                            'password' => '{{ mysql_users.0.password }}',
+                            'host' => '{{ mysql_server }}',
+                            'prefix' => 'typ_',
+                            'port' => '3306',
+                            'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+                            'driver' => 'mysql',
+                            '_dsn_utf8_fallback' => TRUE,
+                        );
+
+$settings['typ_mongodb'] = array(
+                            'database' => 'typ_db',
+                            'username' => '{{ mongo_users.0.user }}',
+                            'password' => '{{ mongo_users.0.password }}',
+                            'prefix' => '',
+                            'host' => {{ mongo_server }},
+                            'port' => '27017');
+
+
+$settings['elasticsearch_servers'] = ['yes1','yes2'];
+$settings['file_public_path'] = 'sites/storage/files';
+$settings['file_private_path'] = 'sites/storage/private';
+$settings['install_profile'] = 'standard';
+$settings['update_free_access'] = FALSE;
+$settings['cache']['default'] = 'cache.backend.memcache_storage';
+$settings['memcache_storage']['key_prefix'] = $GLOBALS['DEV_ROOT'];
+$settings['memcache_storage']['memcached_servers'] = [
+    'yweb1:11211' => 'default',
+    'yweb2:11211' => 'default',
+];
+
+ini_set('session.gc_maxlifetime', 0);
+ini_set('session.cookie_lifetime', 0);
+
+# $settings['memcache_storage']['debug'] = TRUE;
+# $config['system.logging']['error_level'] = 'verbose';
+
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
+$config_directories['active'] = 'sites/default/files/config_vr8PM0Ir8nHIeYItyUiXZ82Q25dQXdh1QPq2hvnt8XF_gdcM5MDwDaCrLh0grfZpFM3nMlOyhw/active';
+$config_directories['staging'] = 'sites/default/files/config_vr8PM0Ir8nHIeYItyUiXZ82Q25dQXdh1QPq2hvnt8XF_gdcM5MDwDaCrLh0grfZpFM3nMlOyhw/staging';

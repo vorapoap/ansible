@@ -1,0 +1,13 @@
+---
+ - name: Set up Webservers with NGINX / PHP-FPM / MEMCACHED
+   hosts: webservers
+   user: root
+   vars:
+     memcached_listen_ip: 0.0.0.0
+     memcached_memory_limit: 4096
+   roles:
+    - common
+    - ansible-role-nginx
+    - ansible-role-php71-fpm
+    - ansible-role-memcached
+    - ansible-role-pandoc
