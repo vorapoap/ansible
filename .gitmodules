@@ -10,3 +10,19 @@
 [submodule "roles/ansible-role-repo-epel"]
 	path = roles/ansible-role-repo-epel
 	url = https://github.com/geerlingguy/ansible-role-repo-epel.git
+[submodule "roles/ansible-elasticsearch"]
+        path = roles/ansible-elasticsearch
+        url = https://github.com/elastic/ansible-elasticsearch.git
+[submodule "roles/ansible-role-haproxy"]
+        path = roles/ansible-role-haproxy
+        url = https://github.com/andrewrothstein/ansible-haproxy.git
+[submodule "roles/ansible-role-memcached"]
+        path = roles/ansible-role-memcached
+        url = https://github.com/geerlingguy/ansible-role-memcached.git
+[submodule "roles/ansible-role-nfs-mount"]
+        path = roles/ansible-role-nfs-mount
+        url = https://github.com/openmicroscopy/ansible-role-nfs-mount.git
+[submodule "roles/ansible-role-nginx"]
+	path = roles/ansible-role-nginx
+	url = https://github.com/vorapoap/ansible-role-nginx
+
