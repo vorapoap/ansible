@@ -1,0 +1,19 @@
+---
+ hosts_file:
+ nfs_share_mounts:
+#   - path: /mnt/storage
+#     location: 127.0.0.1:/storage
+#     opts: "{{ nfs_mount_opts }},rw,hard,nolock,intr"
+
+ mongo_server: locahost
+ mongo_users:
+#   - { user: 'USER', password: 'CHANGEME' }
+
+ mysql_server: locahost
+ mysql_users:
+#   - { user: 'USER', password: 'CHANGEME', host: '%', priv: '*.*:ALL' }
+
+ drupal_debug: false
+
+ local_staging_path: /var/www/staging/
+ deploy_path: /var/www/live
