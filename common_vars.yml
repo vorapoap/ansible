@@ -1,5 +1,6 @@
 ---
  hosts_file:
+    - { l: "172.104.39.21 vrllinode" }
  nfs_share_mounts:
 #   - path: /mnt/storage
 #     location: 127.0.0.1:/storage
