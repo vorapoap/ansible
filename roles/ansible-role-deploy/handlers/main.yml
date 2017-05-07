@@ -1,0 +1,7 @@
+---
+- include_vars: file=common_vars.yml
+- name: drupal cr all
+  shell: drupal cr all
+  args:
+    chdir: "{{ deploy_path }}"
+  ignore_errors: yes

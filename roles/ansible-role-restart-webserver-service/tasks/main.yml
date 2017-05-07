@@ -1,0 +1,11 @@
+---
+
+- include_vars: file=common_vars.yml
+- service: name=nginx state=restarted
+- service: name=php-fpm state=restarted
+- service: name=memcached state=restarted
+- name: Clear Drupal Cache
+  shell: drupal cr all
+  args:
+    chdir: "{{ deploy_path }}"
+  ignore_errors: yes

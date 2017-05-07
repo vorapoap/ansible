@@ -1,0 +1,50 @@
+---
+- name: "Installing MongoDB {{ mongodb_org_repo_version }} repository"
+  yum_repository:
+    name: "mongodb-org-{{ mongodb_org_repo_version }}"
+    description: "MongoDB {{ mongodb_org_repo_version }} Repository"
+    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/{{ mongodb_org_repo_version }}/x86_64/"
+    gpgcheck: yes
+    enabled: "{{ mongodb_org_repo_enabled }}"
+    gpgkey: "{{ mongodb_org_repo_gpg_key }}"
+
+- name: "Importing MongoDB {{ mongodb_org_repo_version }} GPG key to the RPM database"
+  rpm_key:
+    key: "{{ mongodb_org_repo_gpg_key }}"
+    state: present
+    
+- name: "Installing MongoDB"
+  yum: name=mongodb-org state=present enablerepo=mongodb-org-3.4
+
+- name: "Read /sys/kernel/mm/transparent_hugepage/enabled"
+  shell: cat /sys/kernel/mm/transparent_hugepage/enabled
+  register: hugepage_enabled
+
+- name: "Read /sys/kernel/mm/transparent_hugepage/defrag"
+  shell: cat /sys/kernel/mm/transparent_hugepage/defrag
+  register: hugepage_defrag
+
+- name: "Optimize /sys/kernel/mm/transparent_hugepage/enabled"
+  shell: "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
+  when: hugepage_enabled.stdout.find('never') == -1
+  notify: restart mongod
+
+- name: "Optimize /sys/kernel/mm/transparent_hugepage/defrag"
+  shell: "echo never > /sys/kernel/mm/transparent_hugepage/defrag"
+  when: hugepage_defrag.stdout.find('never') == -1
+  notify: restart mongod
+
+- name: Remove bindIp to bind all IPs
+  lineinfile:
+    dest: /etc/mongod.conf
+    state: absent
+    regexp: '^\s+bindIp'
+  notify: restart mongod
+
+- name: "Enable MongoDB"
+  service: name=mongod enabled=yes
+
+- name: "Start MongoDB"
+  service: name=mongod state=started
+
+

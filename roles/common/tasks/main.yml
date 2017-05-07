@@ -1,25 +1,24 @@
-#- name: Check that the EPEL exists
-#  stat:
-#    path: /etc/yum.repos.d/epel.repo
-#  register: epel_repo
+- include_vars: file=common_vars.yml
+- name: Verify hosts file
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ item.l }}"
+  with_items: "{{ hosts_file }}"
 
-#- name: Install RPM Key for EPEL
-#  rpm_key:
-#    state: present
-#    key: http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 
+- set_fact: enable_fastestmirror_plugin=0
 
-
-#- name: Add EPEL repository
-#  yum_repository:
-#    name: epel
-#    description: EPEL YUM repo
-#    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
-#  when: epel_repo.stat.exists == False
+- name: Disable YUM fastestmirror plugin
+  template:
+    src: fastestmirror.conf.j2
+    dest: /etc/yum/pluginconf.d/fastestmirror.conf
 
 - name: Install base programs
   yum: name={{item}} state=present enablerepo=epel
   with_items:
   - htop
   - telnet
-  - wget 
+  - wget
+  - vim
+  - nmap
+  - python-pip
 

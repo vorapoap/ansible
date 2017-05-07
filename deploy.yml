@@ -1,0 +1,9 @@
+---
+- name: Deploy Drupal from Staging to Webserver
+  hosts: webservers
+  user: root
+  roles:
+   - ansible-role-deploy
+
+
+

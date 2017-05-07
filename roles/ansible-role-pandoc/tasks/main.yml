@@ -1,0 +1,12 @@
+---
+- name: Copy direct-centos7-custom-el7 repo file
+  copy:
+    src: direct-centos7-custom-el7.repo
+    dest: /etc/yum.repos.d/
+    owner: root
+    mode: 600
+
+- name: Install latest pandoc
+  yum: name=pandoc state=present enablerepo=direct-centos7-custom-el7
+  with_items:
+  - pandoc
