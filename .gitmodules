@@ -24,5 +24,5 @@
         url = https://github.com/openmicroscopy/ansible-role-nfs-mount.git
 [submodule "roles/ansible-role-nginx"]
 	path = roles/ansible-role-nginx
-	url = https://github.com/vorapoap/ansible-role-nginx
+	url = https://vorapoap@github.com/vorapoap/ansible-role-nginx
 
