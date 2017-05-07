@@ -8,5 +8,5 @@
   roles:
    - common
    - ansible-role-ntp
-   - ansible-role-nfs-mount
+#   - ansible-role-nfs-mount
 
